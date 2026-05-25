@@ -1,0 +1,3 @@
+LMSCluster0
+ atlasadmin       HhEY7Y@3
+                  eyobafekadu988_db_user

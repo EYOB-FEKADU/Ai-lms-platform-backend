@@ -1,0 +1,24 @@
+{
+  "name": "lms-backend",
+  "version": "1.0.0",
+  "description": "AI LMS Platform - Backend API",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --max-old-space-size=256 src/server.js",
+    "dev": "nodemon --max-old-space-size=256 src/server.js",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
