@@ -74,3 +74,43 @@ router.put('/:id/reset-password', authenticate, authorize('super_admin'), async 
     res.status(500).json({ error: error.message });
   }
 });
+
+// POST /api/admin/link-parent — Admin links parent to student
+router.post('/link-parent', authenticate, authorize('super_admin', 'institution_admin'), async (req, res) => {
+  try {
+    const { parentEmail, studentEmail } = req.body;
+    
+    const parent = await User.findOne({ email: parentEmail, role: 'parent' });
+    if (!parent) return res.status(404).json({ error: 'Parent not found' });
+    
+    const student = await User.findOne({ email: studentEmail, role: 'student' });
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+    
+    // Check already linked
+    const alreadyLinked = parent.profile.linkedChildren.some(
+      id => id.toString() === student._id.toString()
+    );
+    if (alreadyLinked) return res.status(400).json({ error: 'Already linked' });
+    
+    // Link both ways
+    parent.profile.linkedChildren.push(student._id);
+    await parent.save();
+    
+    res.json({ message: `${parent.fullName} linked to ${student.fullName}` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/admin/parent-links — Get all parent-student links
+router.get('/parent-links', authenticate, authorize('super_admin', 'institution_admin'), async (req, res) => {
+  try {
+    const parents = await User.find({ role: 'parent' })
+      .select('fullName email profile.linkedChildren')
+      .populate('profile.linkedChildren', 'fullName email profile.grade');
+    
+    res.json({ parents });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});

@@ -8,6 +8,8 @@ const moduleRoutes = require('./routes/modules');
 const lessonRoutes = require('./routes/lessons');
 const enrollmentRoutes = require('./routes/enrollments');
 const adminRoutes = require('./routes/admin');
+const parentRoutes = require('./routes/parent');
+const messageRoutes = require('./routes/messages');
 require('dotenv').config();
 
 const app = express();
@@ -34,6 +36,8 @@ app.use('/api/modules', moduleRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/admin/users', adminRoutes);
+app.use('/api/parent', parentRoutes);
+app.use('/api/messages', messageRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
