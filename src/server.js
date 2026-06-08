@@ -9,6 +9,8 @@ const lessonRoutes = require('./routes/lessons');
 const enrollmentRoutes = require('./routes/enrollments');
 const adminRoutes = require('./routes/admin');
 const parentRoutes = require('./routes/parent');
+const tutorRoutes = require('./routes/tutor');
+// const uploadRoutes = require('./routes/upload');
 const messageRoutes = require('./routes/messages');
 require('dotenv').config();
 
@@ -37,6 +39,8 @@ app.use('/api/lessons', lessonRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/admin/users', adminRoutes);
 app.use('/api/parent', parentRoutes);
+app.use('/api/tutor', tutorRoutes);
+// app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messageRoutes);
 
 const PORT = process.env.PORT || 5000;

@@ -18,3 +18,5 @@ services:
     volumes:
       - ./src:/app/src
       - /app/node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
