@@ -51,7 +51,7 @@ exports.getCourse = async (req, res) => {
         options: { sort: { order: 1 } },
         populate: {
           path: 'lessons',
-          select: 'title contentType duration order isPublished',
+          select: 'title contentType content duration order isPublished aiPromptContext',
           options: { sort: { order: 1 } },
         },
       });
