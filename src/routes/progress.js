@@ -22,11 +22,15 @@ router.post('/mark-complete', authenticate, authorize('student'), async (req, re
       progress.completedAt = new Date();
       progress.attempts += 1;
     } else {
+      const Module = require('../models/Module');
+      const moduleDoc = await Module.findById(lesson.module);
+      const correctCourseId = moduleDoc ? moduleDoc.course : null;
+
       progress = await LessonProgress.create({
         student: req.user._id,
         lesson: lessonId,
         module: lesson.module,
-        course: lesson.module,
+        course: correctCourseId,
         status: 'completed',
         completedAt: new Date(),
       });
