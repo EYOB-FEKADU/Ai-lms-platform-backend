@@ -12,13 +12,13 @@ const parentRoutes = require('./routes/parent');
 const tutorRoutes = require('./routes/tutor');
 const quizRoutes = require('./routes/quizzes');
 const progressRoutes = require('./routes/progress');
-// const uploadRoutes = require('./routes/upload');
+const uploadRoutes = require('./routes/upload');
 const messageRoutes = require('./routes/messages');
 require('dotenv').config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '1mb' }));
 
 connectDB();
@@ -44,7 +44,7 @@ app.use('/api/parent', parentRoutes);
 app.use('/api/tutor', tutorRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/progress', progressRoutes);
-// app.use('/api/upload', uploadRoutes);
+app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messageRoutes);
 
 const PORT = process.env.PORT || 5000;
