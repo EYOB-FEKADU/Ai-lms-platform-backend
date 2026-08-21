@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authenticate } = require('../middleware/auth');
 
-const AI_SERVICE_URL = 'http://172.18.0.1:8000';
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://172.18.0.1:8000';
 
 // POST /api/tutor/ask — Proxy to AI Tutor service
 router.post('/ask', authenticate, async (req, res) => {
