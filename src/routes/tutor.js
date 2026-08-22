@@ -7,11 +7,15 @@ const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://172.18.0.1:8000';
 // POST /api/tutor/ask — Proxy to AI Tutor service
 router.post('/ask', authenticate, async (req, res) => {
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 120000); // 120s timeout
     const response = await fetch(`${AI_SERVICE_URL}/tutor/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(req.body),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     const data = await response.json();
     res.json(data);
   } catch (error) {
@@ -26,11 +30,15 @@ router.post('/index-course', authenticate, async (req, res) => {
   try {
     const { courseId, content } = req.body;
     
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 120000); // 120s timeout
     const response = await fetch(`${AI_SERVICE_URL}/tutor/index-course`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ courseId, content })
+      body: JSON.stringify({ courseId, content }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     
     const data = await response.json();
     res.json(data);
